@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PRODUCT, CATEGORY, AND TRANSACTION DASHBOARD</title>
+
+  <style>
+    /* Body & Background */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(to right, #FADADD 0%, #E0F7FA 100%);
+    }
+
+    /* Navigation Table */
+    .nav-table {
+      margin: 0 auto 30px; /* center and add bottom space */
+      border-collapse: collapse;
+    }
+    .nav-table td {
+      border: 1px solid #ccc;
+      padding: 10px 20px;
+      background: #fff;
+    }
+    .nav-table a {
+      text-decoration: none;
+      color: #0066cc;
+      font-weight: bold;
+    }
+    .nav-table a:hover {
+      text-decoration: underline;
+    }
+
+    /* Headings */
+    h1 {
+      text-align: center;
+      color: grey;
+      font-weight: bold;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin-top: 0;
+      padding-top: 20px;
+    }
+
+    /* Icon next to H2 for "Home" link */
+    .section-title {
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .home-icon {
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .home-icon img {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Dropdown Container */
+    .dropdown-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    select {
+      font-size: 14px;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+      width: 50%;
+      max-width: 300px;
+    }
+
+    /* Table Styles */
+    .table-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .table {
+      width: 80%;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .table th {
+      background-color: #f5f5f5;
+    }
+    .table, .table th, .table td {
+      border: 1px solid #ddd;
+    }
+    .table th, .table td {
+      padding: 12px;
+      text-align: left;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <!-- TOP ANCHOR -->
+  <div id="top"></div>
+
+  <!-- PAGE TITLE -->
+  <h1>PRODUCT, CATEGORY, AND TRANSACTION DASHBOARD</h1>
+
+  <!-- NAVIGATION TABLE -->
+  <table class="nav-table">
+    <tr>
+      <td><a href="#products-section">Products</a></td>
+      <td><a href="#categories-section">Categories</a></td>
+      <td><a href="#transactions-section">Transactions</a></td>
+    </tr>
+  </table>
+
+  <!-- ===================== PRODUCTS SECTION ===================== -->
+  <h2 id="products-section">
+    <span class="section-title">Products</span>
+    <a href="#top" class="home-icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home" />
+    </a>
+  </h2>
+
+  <div class="dropdown-container">
+    <label for="txid-dropdown-prod">Filter by TxID:</label>
+    <select id="txid-dropdown-prod" onchange="onProductFilterChange()">
+      <option value="">-- All TxIDs --</option>
+    </select>
+  </div>
+
+  <div class="table-container">
+    <table class="table" id="products-table">
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Title</th>
+          <th>Store</th>
+          <th>TxID</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- ===================== CATEGORIES SECTION ===================== -->
+  <h2 id="categories-section">
+    <span class="section-title">Categories</span>
+    <a href="#top" class="home-icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home" />
+    </a>
+  </h2>
+
+  <div class="dropdown-container">
+    <label for="txid-dropdown-cat">Filter by TxID:</label>
+    <select id="txid-dropdown-cat" onchange="onCategoryFilterChange()">
+      <option value="">-- All TxIDs --</option>
+    </select>
+  </div>
+
+  <div class="table-container">
+    <table class="table" id="categories-table">
+      <thead>
+        <tr>
+          <th>Sno</th>
+          <th>TxID</th>
+          <th>Category ID</th>
+          <th>Category</th>
+          <th>Pid</th>
+          <th>Affid1</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- ===================== TRANSACTIONS SECTION ===================== -->
+  <h2 id="transactions-section">
+    <span class="section-title">Transactions</span>
+    <a href="#top" class="home-icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home" />
+    </a>
+  </h2>
+
+  <div class="dropdown-container">
+    <label for="txid-dropdown-trans">Filter by TxID:</label>
+    <select id="txid-dropdown-trans" onchange="onTransactionFilterChange()">
+      <option value="">-- All TxIDs --</option>
+    </select>
+  </div>
+
+  <div class="table-container">
+    <table class="table" id="transactions-table">
+      <thead>
+        <tr>
+          <th>Sno</th>
+          <th>TxID</th>
+          <th>Sales</th>
+          <th>Commission</th>
+          <th>Order Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- ===================== SCRIPT ===================== -->
+  <script>
+    const API_BASE_URL = "http://localhost:8080/api";
+
+    // ---------------- PRODUCT Logic ----------------
+    let allProducts = [];
+    async function fetchAllProducts() {
+      try {
+        const resp = await fetch(`${API_BASE_URL}/product`);
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+
+        allProducts = await resp.json();
+        populateProductTable(allProducts);
+        populateProductTxIdDropdown(allProducts);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+      }
+    }
+
+    function populateProductTable(products) {
+      const tableBody = document.querySelector("#products-table tbody");
+      tableBody.innerHTML = "";
+
+      products.forEach(p => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).innerText = p.productid;
+        row.insertCell(1).innerText = p.title;
+        row.insertCell(2).innerText = p.store;
+        row.insertCell(3).innerText = p.txid;
+        row.insertCell(4).innerText = p.price;
+      });
+    }
+
+    function populateProductTxIdDropdown(products) {
+      const dropdown = document.getElementById("txid-dropdown-prod");
+      dropdown.innerHTML = '<option value="">-- All TxIDs --</option>';
+      const txids = new Set();
+
+      products.forEach(p => {
+        if (p.txid) txids.add(p.txid);
+      });
+
+      txids.forEach(tx => {
+        const opt = document.createElement("option");
+        opt.value = tx;
+        opt.textContent = tx;
+        dropdown.appendChild(opt);
+      });
+    }
+
+    async function onProductFilterChange() {
+      const txidValue = document.getElementById("txid-dropdown-prod").value.trim();
+      if (!txidValue) {
+        populateProductTable(allProducts);
+        return;
+      }
+      const filterUrl = `${API_BASE_URL}/product/filter?txid=${encodeURIComponent(txidValue)}`;
+      try {
+        const resp = await fetch(filterUrl);
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+
+        const filtered = await resp.json();
+        populateProductTable(filtered);
+      } catch (err) {
+        console.error("Error fetching filtered products:", err);
+      }
+    }
+
+    // ---------------- CATEGORY Logic ----------------
+    let allCategories = [];
+    async function fetchCategories() {
+      try {
+        const resp = await fetch(`${API_BASE_URL}/category`);
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+
+        allCategories = await resp.json();
+        populateCategoriesTable(allCategories);
+        populateCategoryTxIdDropdown(allCategories);
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      }
+    }
+
+    function populateCategoriesTable(cats) {
+      const tableBody = document.querySelector("#categories-table tbody");
+      tableBody.innerHTML = "";
+      cats.forEach(c => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).innerText = c.sno;
+        row.insertCell(1).innerText = c.txid;
+        row.insertCell(2).innerText = c.category_id;
+        row.insertCell(3).innerText = c.category;
+        row.insertCell(4).innerText = c.pid;
+        row.insertCell(5).innerText = c.affid1;
+      });
+    }
+
+    function populateCategoryTxIdDropdown(cats) {
+      const dropdown = document.getElementById("txid-dropdown-cat");
+      dropdown.innerHTML = '<option value="">-- All TxIDs --</option>';
+      const txids = new Set();
+
+      cats.forEach(c => {
+        if (c.txid) txids.add(c.txid);
+      });
+
+      txids.forEach(tx => {
+        const opt = document.createElement("option");
+        opt.value = tx;
+        opt.textContent = tx;
+        dropdown.appendChild(opt);
+      });
+    }
+
+    async function onCategoryFilterChange() {
+      const txidValue = document.getElementById("txid-dropdown-cat").value.trim();
+      if (!txidValue) {
+        populateCategoriesTable(allCategories);
+        return;
+      }
+      const filterUrl = `${API_BASE_URL}/category/filter?txid=${encodeURIComponent(txidValue)}`;
+      try {
+        const resp = await fetch(filterUrl);
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+
+        const filtered = await resp.json();
+        populateCategoriesTable(filtered);
+      } catch (err) {
+        console.error("Error fetching filtered categories:", err);
+      }
+    }
+
+    // ---------------- TRANSACTION Logic ----------------
+    let allTransactions = [];
+    async function fetchTransactions() {
+      try {
+        const resp = await fetch(`${API_BASE_URL}/transaction`);
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+
+        allTransactions = await resp.json();
+        populateTransactionsTable(allTransactions);
+        populateTransactionTxIdDropdown(allTransactions);
+      } catch (err) {
+        console.error("Error fetching transactions:", err);
+      }
+    }
+
+    function populateTransactionsTable(txns) {
+      const tableBody = document.querySelector("#transactions-table tbody");
+      tableBody.innerHTML = "";
+      txns.forEach(t => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).innerText = t.sno;
+        row.insertCell(1).innerText = t.txid;
+        row.insertCell(2).innerText = t.sales;
+        row.insertCell(3).innerText = t.commission;
+        row.insertCell(4).innerText = t.order_date;
+        row.insertCell(5).innerText = t.status;
+      });
+    }
+
+    function populateTransactionTxIdDropdown(txns) {
+      const dropdown = document.getElementById("txid-dropdown-trans");
+      dropdown.innerHTML = '<option value="">-- All TxIDs --</option>';
+      const txids = new Set();
+
+      txns.forEach(t => {
+        if (t.txid) txids.add(t.txid);
+      });
+
+      txids.forEach(tx => {
+        const opt = document.createElement("option");
+        opt.value = tx;
+        opt.textContent = tx;
+        dropdown.appendChild(opt);
+      });
+    }
+
+    async function onTransactionFilterChange() {
+      const txidValue = document.getElementById("txid-dropdown-trans").value.trim();
+      if (!txidValue) {
+        populateTransactionsTable(allTransactions);
+        return;
+      }
+      const filterUrl = `${API_BASE_URL}/transaction/filter?txid=${encodeURIComponent(txidValue)}`;
+      try {
+        const resp = await fetch(filterUrl);
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+
+        const filtered = await resp.json();
+        populateTransactionsTable(filtered);
+      } catch (err) {
+        console.error("Error fetching filtered transactions:", err);
+      }
+    }
+
+    // ---------------- PAGE INIT ----------------
+    window.onload = () => {
+      fetchAllProducts();
+      fetchCategories();
+      fetchTransactions();
+    };
+  </script>
+</body>
+</html>
